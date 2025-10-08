@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "/QJ4UlUxb5w=",
+  "dgSpecHash": "hQ4eTOYfC/0=",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\source\\repos\\FoodStore\\FoodStore\\FoodStore.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\spectre.console\\0.51.1\\spectre.console.0.51.1.nupkg.sha512"
+  ],
   "logs": []
 }

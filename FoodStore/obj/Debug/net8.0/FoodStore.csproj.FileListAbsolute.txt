@@ -12,3 +12,7 @@ C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\refint\FoodStor
 C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\FoodStore.pdb
 C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\FoodStore.genruntimeconfig.cache
 C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\ref\FoodStore.dll
+C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\FoodStore.sourcelink.json
+C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\FoodStore.csproj.AssemblyReference.cache
+C:\Users\Admin\source\repos\FoodStore\FoodStore\bin\Debug\net8.0\Spectre.Console.dll
+C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\FoodStore.csproj.Up2Date
