@@ -1,0 +1,14 @@
+C:\Users\Admin\source\repos\FoodStore\FoodStore\bin\Debug\net8.0\FoodStore.exe
+C:\Users\Admin\source\repos\FoodStore\FoodStore\bin\Debug\net8.0\FoodStore.deps.json
+C:\Users\Admin\source\repos\FoodStore\FoodStore\bin\Debug\net8.0\FoodStore.runtimeconfig.json
+C:\Users\Admin\source\repos\FoodStore\FoodStore\bin\Debug\net8.0\FoodStore.dll
+C:\Users\Admin\source\repos\FoodStore\FoodStore\bin\Debug\net8.0\FoodStore.pdb
+C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\FoodStore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\FoodStore.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\FoodStore.AssemblyInfo.cs
+C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\FoodStore.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\FoodStore.dll
+C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\refint\FoodStore.dll
+C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\FoodStore.pdb
+C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\FoodStore.genruntimeconfig.cache
+C:\Users\Admin\source\repos\FoodStore\FoodStore\obj\Debug\net8.0\ref\FoodStore.dll
