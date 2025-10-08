@@ -80,11 +80,40 @@ FoodStore/
 └── Domain/         # Tái sử dụng từ console
 ```
 
-### Logic sử dụng
+### So sánh Console App và Web MVC / Web API
+
+| **Thành phần trong Console App** | **Thành phần tương ứng trong MVC / Web API** | **Vai trò** |
+|-----------------------------------|-----------------------------------------------|-------------|
+| **Domain** | **Models** | Chứa các class dữ liệu (entity) như `Customer`, `RiceProduct`, `Order` — mô tả cấu trúc dữ liệu thực tế |
+| **Services** | **Services** hoặc một phần trong **Controllers** | Xử lý nghiệp vụ (business logic) – ví dụ: tạo đơn hàng, tính giá, cập nhật tồn kho, tích điểm thành viên |
+| **Program.cs (Main)** | **Controllers** (và Startup / Program trong web) | Là "điểm vào" của chương trình. Trong web, Controller nhận request từ người dùng, gọi Service, rồi trả về response |
+| **Generics / Helpers** | **Utils / Common / Helpers** | Chứa các hàm dùng chung như định dạng tiền, in hóa đơn, hoặc log dữ liệu |
+
+#### **Mapping chi tiết:**
+
+**Console App → MVC:**
+- `Domain/Customer.cs` → `Models/Customer.cs` (giữ nguyên)
+- `Services/OrderService.cs` → `Services/OrderService.cs` (giữ nguyên) 
+- `Program.cs` → `Controllers/OrderController.cs` + `Views/Order/`
+- `Generics/InMemoryRepository.cs` → `Data/Repository.cs` (thay bằng Entity Framework)
+
+**Console App → Web API:**
+- `Domain/` → `Models/` (giữ nguyên)
+- `Services/` → `Services/` (giữ nguyên)
+- `Program.cs` → `Controllers/` (trả về JSON thay vì Console.WriteLine)
+
+#### **Logic sử dụng:**
 - **Console**: Demo và testing business logic, không cần UI
 - **MVC**: Giao diện web thực tế, tái sử dụng Domain và Services
 - **Domain**: Chia sẻ giữa console và MVC (DRY principle)
 - **Services**: Business logic có thể inject vào MVC controllers
+
+#### **Migration Path:**
+1. **Phase 1**: Phát triển business logic trong Console
+2. **Phase 2**: Tạo MVC project, copy Domain + Services
+3. **Phase 3**: Tạo Controllers gọi Services
+4. **Phase 4**: Tạo Views và ViewModels
+5. **Phase 5**: Cấu hình database thật thay InMemory
 
 ## ⚠️ Lưu ý quan trọng
 
