@@ -38,15 +38,53 @@ dotnet run --project FoodStore
 ```
 
 ## Cấu trúc dự án
+
+### Console Application (Hiện tại)
 ```
 FoodStore/
 ├── Domain/           # Các entity và business logic
+│   ├── Customer.cs   # Khách hàng (abstract base)
+│   ├── MemberCustomer.cs # Khách hàng thành viên
+│   ├── RiceProduct.cs # Sản phẩm gạo
+│   └── Order.cs      # Đơn hàng
 ├── Generics/         # Generic repository pattern
+│   └── InMemoryRepository.cs
 ├── Pricing/          # Chiến lược tính giá và thuế
+│   ├── IPriceRule.cs
+│   ├── ITaxCalculator.cs
+│   └── Vat8Percent.cs
 ├── Services/         # Business services
-├── Program.cs        # Entry point
+│   ├── OrderService.cs
+│   └── InventoryService.cs
+├── Program.cs        # Entry point console
 └── README.md
 ```
+
+### MVC Application (Dự kiến)
+```
+FoodStore/
+├── Controllers/      # MVC Controllers
+│   ├── HomeController.cs
+│   ├── ProductController.cs
+│   └── OrderController.cs
+├── Views/           # Razor Views
+│   ├── Home/
+│   ├── Product/
+│   └── Order/
+├── Models/          # ViewModels
+│   ├── ProductViewModel.cs
+│   └── OrderViewModel.cs
+├── wwwroot/         # Static files (CSS, JS, images)
+├── appsettings.json # Cấu hình ứng dụng
+├── Program.cs       # Entry point MVC
+└── Domain/         # Tái sử dụng từ console
+```
+
+### Logic sử dụng
+- **Console**: Demo và testing business logic, không cần UI
+- **MVC**: Giao diện web thực tế, tái sử dụng Domain và Services
+- **Domain**: Chia sẻ giữa console và MVC (DRY principle)
+- **Services**: Business logic có thể inject vào MVC controllers
 
 ## ⚠️ Lưu ý quan trọng
 
