@@ -14,6 +14,7 @@ namespace FoodStore.Views
         /// </summary>
         public static void SeedProducts(ProductService productService)
         {
+            // array data
             var products = new List<Product>
             {
                 new Product
@@ -66,6 +67,14 @@ namespace FoodStore.Views
             foreach (var product in products)
             {
                 productService.AddProduct(product);
+                // productService.AddProduct(new Product
+                // {
+                //     Name = product.Name,
+                //     Category = product.Category,
+                //     Price = product.Price,
+                //     Stock = product.Stock,
+                //     Status = product.Status,
+                // });
             }
         }
 
