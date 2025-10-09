@@ -7,20 +7,24 @@ using Spectre.Console;
 namespace FoodStore.Views.Tables
 {
     /// <summary>
-    /// Table hiển thị rank thành viên
+    /// Table hiển thị hệ thống cấp độ thành viên và xếp hạng
+    /// Bao gồm thông tin rank hiện tại, rank tiếp theo và thống kê
     /// </summary>
     public static class RankTable
     {
         /// <summary>
-        /// Hiển thị bảng rank cho khách hàng
+        /// Hiển thị bảng xếp hạng thành viên cho khách hàng
+        /// Bao gồm rank hiện tại, rank tiếp theo và bảng cấp độ đầy đủ
         /// </summary>
+        /// <param name="customer">Khách hàng cần xem rank</param>
+        /// <param name="customerService">Service để lấy thông tin cấp độ thành viên</param>
         public static void ShowCustomerRankTable(Customer customer, CustomerService customerService)
         {
             Console.Clear();
             Console.WriteLine("=== BẢNG XẾP HẠNG THÀNH VIÊN ===");
             Console.WriteLine(DisplayHelper.CreateSeparator(60));
 
-            // Lấy thông tin rank hiện tại (dựa trên điểm thực tế)
+            // Lấy thông tin rank hiện tại dựa trên điểm tích lũy thực tế
             var currentTierId = GetTierIdByPoints(customer.Points);
             var currentTier = customerService.GetTier(currentTierId);
             Console.WriteLine(
@@ -28,7 +32,7 @@ namespace FoodStore.Views.Tables
             );
             Console.WriteLine($"Điểm hiện tại: {customer.Points}");
 
-            // Tính điểm cần thiết để lên rank tiếp theo
+            // Tính toán thông tin rank tiếp theo
             var nextTier = GetNextTier(currentTierId, customerService);
             if (nextTier != null)
             {
@@ -47,6 +51,7 @@ namespace FoodStore.Views.Tables
             Console.WriteLine(DisplayHelper.CreateSeparator(60));
             Console.WriteLine("=== BẢNG RANK THÀNH VIÊN ===");
 
+            // Tạo bảng hiển thị tất cả cấp độ thành viên
             var table = new Table();
             table.Border(TableBorder.Square);
             table.AddColumn("Rank");
@@ -54,6 +59,7 @@ namespace FoodStore.Views.Tables
             table.AddColumn("Giảm giá");
             table.AddColumn("Trạng thái");
 
+            // Định nghĩa các cấp độ thành viên
             var tiers = new[]
             {
                 (1, "Thường", 0, 0),
@@ -62,10 +68,11 @@ namespace FoodStore.Views.Tables
                 (4, "Kim Cương", 1000, 10),
             };
 
+            // Thêm từng cấp độ vào bảng
             foreach (var (id, name, points, discount) in tiers)
             {
                 var tier = customerService.GetTier(id);
-                var status = currentTierId == id ? "← Hiện tại" : "";
+                var status = currentTierId == id ? "← Hiện tại" : ""; // Đánh dấu rank hiện tại
                 table.AddRow(name, points.ToString(), $"{discount}%", status);
             }
 
@@ -77,8 +84,10 @@ namespace FoodStore.Views.Tables
         }
 
         /// <summary>
-        /// Hiển thị bảng quản lý rank cho nhân viên
+        /// Hiển thị bảng quản lý rank thành viên cho nhân viên
+        /// Bao gồm thống kê số lượng khách hàng theo từng cấp độ
         /// </summary>
+        /// <param name="customerService">Service để lấy dữ liệu khách hàng và cấp độ</param>
         public static void ShowEmployeeRankTable(CustomerService customerService)
         {
             Console.Clear();
@@ -92,6 +101,7 @@ namespace FoodStore.Views.Tables
             rankTable.AddColumn("Giảm giá");
             rankTable.AddColumn("Số khách hàng");
 
+            // Hiển thị thống kê cho từng cấp độ thành viên
             var tiers = new[] { 1, 2, 3, 4 };
             foreach (var tierId in tiers)
             {
@@ -113,6 +123,7 @@ namespace FoodStore.Views.Tables
             var allCustomers = customerService.GetAllCustomers();
             var tierGroups = allCustomers.GroupBy(c => c.TierId).OrderBy(g => g.Key);
 
+            // Hiển thị danh sách khách hàng theo từng cấp độ
             foreach (var group in tierGroups)
             {
                 var tier = customerService.GetTier(group.Key);
@@ -123,6 +134,7 @@ namespace FoodStore.Views.Tables
                 customerTable.AddColumn("Khách hàng");
                 customerTable.AddColumn("Điểm tích lũy");
 
+                // Sắp xếp khách hàng theo điểm tích lũy giảm dần
                 foreach (var customer in group.OrderByDescending(c => c.Points))
                 {
                     customerTable.AddRow(customer.Name, customer.Points.ToString());
@@ -136,41 +148,49 @@ namespace FoodStore.Views.Tables
         }
 
         /// <summary>
-        /// Lấy rank tiếp theo
+        /// Lấy thông tin cấp độ thành viên tiếp theo
         /// </summary>
+        /// <param name="currentTierId">ID cấp độ hiện tại</param>
+        /// <param name="customerService">Service để lấy thông tin cấp độ</param>
+        /// <returns>Thông tin cấp độ tiếp theo hoặc null nếu đã ở cấp cao nhất</returns>
         private static MemberTier? GetNextTier(int currentTierId, CustomerService customerService)
         {
             return customerService.GetTier(currentTierId + 1);
         }
 
         /// <summary>
-        /// Lấy điểm cần thiết cho rank
+        /// Lấy số điểm cần thiết để đạt được cấp độ thành viên
         /// </summary>
+        /// <param name="tierId">ID cấp độ thành viên</param>
+        /// <returns>Số điểm cần thiết</returns>
         private static int GetPointsNeededForTier(int tierId)
         {
             return tierId switch
             {
-                1 => 0, // Thường
-                2 => 100, // Bạc
-                3 => 500, // Vàng
-                4 => 1000, // Kim Cương
-                _ => 0,
+                1 => 0, // Thường - không cần điểm
+                2 => 100, // Bạc - cần 100 điểm
+                3 => 500, // Vàng - cần 500 điểm
+                4 => 1000, // Kim Cương - cần 1000 điểm
+                _ => 0, // Mặc định
             };
         }
 
         /// <summary>
-        /// Lấy rank ID dựa trên điểm tích lũy
+        /// Xác định cấp độ thành viên dựa trên điểm tích lũy
+        /// Logic này phải đồng bộ với CustomerService và OrderService
         /// </summary>
+        /// <param name="points">Số điểm tích lũy</param>
+        /// <returns>ID cấp độ thành viên tương ứng</returns>
         private static int GetTierIdByPoints(int points)
         {
             if (points >= 1000)
-                return 4; // Kim Cương
+                return 4; // Kim Cương (10% giảm giá)
             else if (points >= 500)
-                return 3; // Vàng
+                return 3; // Vàng (5% giảm giá)
             else if (points >= 100)
-                return 2; // Bạc
+                return 2; // Bạc (3% giảm giá)
             else
-                return 1; // Thường
+                return 1; // Thường (0% giảm giá)
         }
     }
 }
